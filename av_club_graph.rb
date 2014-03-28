@@ -1,15 +1,14 @@
-# Assignment 1 - Part 4
-# Ruby webscraper
-# Jack Christiansen
+
 
 require 'rubygems'
 require 'nokogiri' 
 require 'open-uri'
 require 'mechanize'
    
+ 
+
 page = Nokogiri::HTML(open('http://www.avclub.com/tv/'))   
 agent = Mechanize.new
-
 
 #array = Hash.new # stores 2 dimensional array in hash, uses coordinates as hash function
 
@@ -22,6 +21,8 @@ class Graph
 		#@url = "http://www.avclub.com/tvclub/breaking-bad-pilot-17025"
 		#puts "Enter the name of a television show"
 		#@show = gets.chomp
+
+
 	end
 
 	def print
@@ -33,20 +34,28 @@ tvGraph = Graph.new
 
 #tvGraph.print
 
-page.css('div#search-flyout').each do |el|
-   #puts el.text
-end
 
-#avHomePage = agent.get('http://www.avclub.com/tv/')
-#pp avHomePage
-#searchBox = avHomePage.form('search-flyout')
+
+
+
+
+
+# Put these lines back in afterwards
+#puts "Enter the name of a television show"
+#_show = gets.chomp
+_show = 'breaking bad'
 
 agent.get('http://www.avclub.com/tv/') do |page|
   search_result = page.form_with(:action => '/search/') do |search|
-    search.q = 'breaking bad'
+    search.q = _show
   end.submit
 
-  search_result.links.each do |link|
+  #reviews = page.link_with(text: '').click
+  #puts review.uri
+
+  search_result.links.with(:href => '/tv/breaking-bad/').each do |link|
     puts link.text
   end
+
+
 end

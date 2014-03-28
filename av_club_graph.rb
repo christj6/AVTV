@@ -61,6 +61,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   #x = agent.get('http://www.avclub.com/tv/breaking-bad/')
   page = Nokogiri::HTML(open(reviews.uri.to_s))
   validSeasons = page.css('nav a').select{|link| link['data-ct_href'] == "tvSeasonButton"}
+  puts validSeasons[0].inner_html
   #puts validSeasons[0]
   puts validSeasons
   # end testing

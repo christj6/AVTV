@@ -1,4 +1,67 @@
 
+=begin
+
+Sample Output:
+---------------------------------------------------------------------------------------------------------------
+Modern Family:
+season 1
+24
+season 2
+24
+season 3
+23
+season 4
+23
+season 5
+17
+   .    .   .   .     .                       .                                                       .       .
+... .    .    .. ..  . ..    . .  .     .  .         .   .       .   . ..      .         . . .              .
+          .. .             .  . .     .  .  .. .  .    .  . ..        .    .  . .  .   .      .          .   .
+      ..                 ..         .           .             .     .     .       .  .. . . .           .  .
+     .              .       .    .   . .         .  .           .        .  .    .  .           ...
+                   .               .      .        .       .   .  .          .                     ...
+                                                      .            .                                   .  .
+                                                        .                                      .
+-------------------------------------------------------------------------------------------------------------------
+Justified:
+season 1
+13
+season 2
+13
+season 3
+13
+season 4
+13
+season 5
+11
+.        . ..    . . .   .    .       . .        ...    .
+   .. ...           . ...   .    ...   .  ..  . .    .      ..
+  .          ...          .. . ..   ..   .     .    .  . . .  .
+ .   .    .     . .                          .        .
+                                            .             .
+
+
+
+
+------------------------------------------------------------------------
+Breaking Bad:
+season 1
+7
+season 2
+13
+season 3
+13
+season 4
+13
+season 5
+16
+     .   . .  ... ... . ... .. ..          ...     . ..  ... .
+... .  .  . ..                .   . .  .  .   ..... .  ..   .
+      . .            .           . . .. ..
+                 .     .   .
+   .
+------------------------------------------------------------------------
+=end
 
 require 'rubygems'
 require 'nokogiri' 
@@ -16,7 +79,7 @@ agent = Mechanize.new
 # Put these lines back in afterwards
 #puts "Enter the name of a television show (be sure to capitalize)"
 #_show = gets.chomp
-_show = 'Breaking Bad'
+_show = 'Modern Family'
 
 agent.get('http://www.avclub.com/tv/') do |page|
   search_result = page.form_with(:action => '/search/') do |search|
@@ -35,7 +98,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   season.pop # the latest episode is at the top of every page, remove it from the list
   season.pop
   season = season.reverse
-  puts season
+  puts season.length
   while season.length > 0 do
   	grades.push(season.pop.inner_text())
   end
@@ -45,7 +108,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   season.pop # the latest episode is at the top of every page, remove it from the list
   season.pop
   season = season.reverse
-  puts season
+  puts season.length
   while season.length > 0 do
   	grades.push(season.pop.inner_text())
   end
@@ -55,7 +118,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   season.pop # the latest episode is at the top of every page, remove it from the list
   season.pop
   season = season.reverse
-  puts season
+  puts season.length
   while season.length > 0 do
   	grades.push(season.pop.inner_text())
   end
@@ -65,7 +128,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   season.pop # the latest episode is at the top of every page, remove it from the list
   season.pop
   season = season.reverse
-  puts season
+  puts season.length
   while season.length > 0 do
   	grades.push(season.pop.inner_text())
   end
@@ -75,7 +138,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   season.pop # the latest episode is at the top of every page, remove it from the list
   season.pop
   season = season.reverse
-  puts season
+  puts season.length
   while season.length > 0 do
   	grades.push(season.pop.inner_text())
   end

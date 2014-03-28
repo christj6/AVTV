@@ -38,7 +38,7 @@ tvGraph = Graph.new
 
 
 
-
+# AV Club Grades: A, A-, B+, B, B-, C+, C, C-, D+, D, 
 
 # Put these lines back in afterwards
 #puts "Enter the name of a television show (be sure to capitalize)"
@@ -55,11 +55,8 @@ agent.get('http://www.avclub.com/tv/') do |page|
   seasonOne = reviews.link_with(class: "badge season-1").click
   puts seasonOne.uri
 
-  firstEpisode = seasonOne.link_with(class: "badge season-1").click
-
-  #search_result.links.with(:href => '/tv/breaking-bad/').each do |link|
-    #puts link.text
-  #end
+  # we're looking for div class = 'grade letter  tv'
+  puts seasonOne.search('.grade.letter.tv')
 
 
 end

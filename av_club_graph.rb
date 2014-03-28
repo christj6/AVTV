@@ -59,8 +59,9 @@ agent.get('http://www.avclub.com/tv/') do |page|
   grades = Array.new
 
   puts "season 1"
-  season = reviews.link_with(class: "badge season-1").click.search('.grade.letter.tv')
-  
+  season = reviews.link_with(class: "badge season-1").click.search('.grade.letter.tv').reverse
+  season.pop # the latest episode is at the top of every page, remove it from the list
+  season = season.reverse
   while season.length > 0 do
   	grades.push(season.pop.inner_text())
   end

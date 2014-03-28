@@ -57,6 +57,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
 
 
   grades = Array.new
+  graph = Hash.new
 
   #puts "season 1"
   season = reviews.link_with(class: "badge season-1").click.search('.grade.letter.tv').reverse
@@ -101,7 +102,34 @@ agent.get('http://www.avclub.com/tv/') do |page|
   #puts grades
 
   while grades.length > 0 do
-  	grades.pop
+  	case grades.pop
+  	when "A"
+  		puts "11"
+  	when "A-"
+  		puts "10"
+  	when "B+"
+  		puts "9"
+  	when "B"
+  		puts "8"
+  	when "B-"
+  		puts "7"
+  	when "C+"
+  		puts "6"
+  	when "C"
+  		puts "5"
+  	when "C-"
+  		puts "4"
+  	when "D+"
+  		puts "3"
+  	when "D"
+  		puts "2"
+  	when "D-"
+  		puts "1"
+  	when "F"
+  		puts "0"
+  	else
+  		puts "test"
+  	end
   end
 
   
@@ -109,14 +137,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   
   
 
-  #seasonOne = reviews.link_with(class: "badge season-1").click
-  #puts seasonOne.uri
 
-  # we're looking for div class = 'grade letter  tv'
-  #puts seasonOne.search('.grade.letter.tv')
-
-
-  puts reviews.search('tvSeasonButton')
 
 
 end

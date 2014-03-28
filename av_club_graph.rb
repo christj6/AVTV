@@ -1,6 +1,12 @@
+
 =begin
+
+Given the name of a television show, this program gathers the grades AV Club gave to every episode it reviewed,
+and creates a contour/graph where A = 11, A- = 10, B+ = 9 ... F = 0.
+This contour is printed to the console in ascii format.
+
 Sample Output:
--------------------------------------------------------------
+-------------------------------
 Breaking Bad:
 season 1
 7
@@ -17,13 +23,6 @@ X X X   X     X     X   X X                                 X       X   X     X 
             X   X                         X                       X   X   X X   X X
                                   X           X       X
       X
-
-
-
-
-
-
-
 
 ----------------------------------------------------------------
 =end
@@ -146,7 +145,7 @@ for i in 0..11
 		_yFlip = 11 - i; # flips the value, since the graph counts upside down
 
 		if graphY[graphY.length-1 - j] == _yFlip then
-			print "# "
+			print "X "
 		else
 			print "  "
 		end

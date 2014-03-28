@@ -5,38 +5,8 @@ require 'nokogiri'
 require 'open-uri'
 require 'mechanize'
    
- 
 
-#page = Nokogiri::HTML(open('http://www.avclub.com/tv/'))   
 agent = Mechanize.new
-
-#array = Hash.new # stores 2 dimensional array in hash, uses coordinates as hash function
-
-=begin # erase this line and the line that starts with =end to get the class back
-class Graph
-	@show 
-	@url
-	@grades = Array.new
-
-	def initialize
-		#@url = "http://www.avclub.com/tvclub/breaking-bad-pilot-17025"
-		#puts "Enter the name of a television show"
-		#@show = gets.chomp
-
-
-	end
-
-	def print
-		puts "blah"
-	end
-end
-=end
-
-#tvGraph = Graph.new
-
-#tvGraph.print
-
-
 
 
 
@@ -142,7 +112,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   	end
   end
 
-  
+  # this prints the values corresponding with each AV Club grade in ascii format
 for i in 0..11
 	for j in 0..graphY.length-1
 		_yFlip = 11 - i; # flips the value, since the graph counts upside down

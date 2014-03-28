@@ -41,9 +41,9 @@ agent = Mechanize.new
 # on metacritic, they correspond with: 100, 91, 83, 80, 75, 70, 67, 60, 58, 50, 42, 40 (SKIP), 33, 25, 16, 0
 
 # Put these lines back in afterwards
-#puts "Enter the name of a television show (be sure to capitalize)"
-#_show = gets.chomp
-_show = 'Breaking Bad'
+puts "Enter the name of a television show (be sure to capitalize)"
+_show = gets.chomp
+#_show = 'Breaking Bad'
 
 agent.get('http://www.avclub.com/tv/') do |page|
   search_result = page.form_with(:action => '/search/') do |search|
@@ -57,14 +57,10 @@ agent.get('http://www.avclub.com/tv/') do |page|
   graphY = Array.new
   validSeasons = Array.new
 
-  # testing
-  #x = agent.get('http://www.avclub.com/tv/breaking-bad/')
+  #fetch the number of TV Season buttons on the show's page
   page = Nokogiri::HTML(open(reviews.uri.to_s))
   validSeasons = page.css('nav a').select{|link| link['data-ct_href'] == "tvSeasonButton"}
-  puts validSeasons[0].inner_html
-  #puts validSeasons[0]
-  puts validSeasons
-  # end testing
+
 
   # this function takes a given TV season and pushes it onto the Grades array
   def pushSeason (index, reviews, grades, validSeasons)
@@ -84,11 +80,15 @@ agent.get('http://www.avclub.com/tv/') do |page|
 	  end
   end
 
-  pushSeason(4, reviews, grades, validSeasons)
-  pushSeason(3, reviews, grades, validSeasons)
-  pushSeason(2, reviews, grades, validSeasons)
-  pushSeason(1, reviews, grades, validSeasons)
-  pushSeason(0, reviews, grades, validSeasons)
+  #pushSeason(4, reviews, grades, validSeasons)
+  #pushSeason(3, reviews, grades, validSeasons)
+  #pushSeason(2, reviews, grades, validSeasons)
+  #pushSeason(1, reviews, grades, validSeasons)
+  #pushSeason(0, reviews, grades, validSeasons)
+
+  for i in 0..validSeasons.length-1
+  	pushSeason(validSeasons.length-1 - i, reviews, grades, validSeasons)
+  end
 
 
   while grades.length > 0 do

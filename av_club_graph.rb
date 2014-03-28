@@ -199,9 +199,9 @@ for i in 0..11
 		_yFlip = 11 - i; # flips the value, since the graph counts upside down
 
 		if graphY[graphY.length-1 - j] == _yFlip then
-			print "#"
+			print "# "
 		else
-			print " "
+			print "  "
 		end
 		STDOUT.flush
 	end

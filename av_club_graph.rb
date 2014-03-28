@@ -52,6 +52,9 @@ agent.get('http://www.avclub.com/tv/') do |page|
   # grab exact spelling of show so the user doesn't have to capitalize it exactly
   page = Nokogiri::HTML(open(search_result.uri.to_s))
   firstResult = page.css('section ul li a')[0]
+  secondResult = page.css('section ul li a')[1]
+
+  puts "You searched for " + firstResult.inner_html
   reviews = search_result.link_with(text: firstResult.inner_html).click
 
 
@@ -116,6 +119,8 @@ agent.get('http://www.avclub.com/tv/') do |page|
   		graphY.push(-1) # Sopranos Season 5 has no reviews. This allows the contour to skip over season 5, but still present the gap.
   	end
   end
+
+
 
   # this prints the values corresponding with each AV Club grade in ascii format
 for i in 0..11

@@ -51,11 +51,25 @@ agent.get('http://www.avclub.com/tv/') do |page|
 
   # grab exact spelling of show so the user doesn't have to capitalize it exactly
   page = Nokogiri::HTML(open(search_result.uri.to_s))
-  firstResult = page.css('section ul li a')[0]
-  secondResult = page.css('section ul li a')[1]
+  results = page.css('section ul li a')
 
-  puts "You searched for " + firstResult.inner_html
-  reviews = search_result.link_with(text: firstResult.inner_html).click
+  puts "You searched for: "
+
+  for i in 0..results.length-1
+  	puts (i+1).to_s + ": " + results[i].inner_html
+  end
+
+  puts "" # make it easier on the eyes
+
+  if results.length > 1
+  	puts "Which one is it?"
+  	userChoice = gets.chomp
+  	reviews = search_result.link_with(text: results[userChoice.to_i-1].inner_html).click
+  else
+  	reviews = search_result.link_with(text: results[0].inner_html).click
+  end
+
+  puts "" # make it easier on the eyes
 
 
   grades = Array.new

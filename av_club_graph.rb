@@ -54,22 +54,31 @@ agent.get('http://www.avclub.com/tv/') do |page|
 
 
   grades = Array.new
-  graphX = Array.new
   graphY = Array.new
+  validSeasons = Array.new
+
+  # testing
+  #x = agent.get('http://www.avclub.com/tv/breaking-bad/')
+  x = Nokogiri::HTML(open('http://www.avclub.com/tv/breaking-bad/'))
+  puts x.css('nav a').select{|link| link['data-ct_href'] == "tvSeasonButton"}
+  # end testing
 
   puts "season 1"
   season = reviews.link_with(class: "badge season-1").click.search('.grade.letter.tv').reverse
   season.pop # the latest episode is at the top of every page, remove it from the list
+  season.pop
   season.pop
   season = season.reverse
   puts season.length
   while season.length > 0 do
   	grades.push(season.pop.inner_text())
   end
+  
 
   puts "season 2"
   season = reviews.link_with(class: "badge season-2").click.search('.grade.letter.tv').reverse
   season.pop # the latest episode is at the top of every page, remove it from the list
+  season.pop
   season.pop
   season = season.reverse
   puts season.length
@@ -81,6 +90,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   season = reviews.link_with(class: "badge season-3").click.search('.grade.letter.tv').reverse
   season.pop # the latest episode is at the top of every page, remove it from the list
   season.pop
+  season.pop
   season = season.reverse
   puts season.length
   while season.length > 0 do
@@ -91,6 +101,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   season = reviews.link_with(class: "badge season-4").click.search('.grade.letter.tv').reverse
   season.pop # the latest episode is at the top of every page, remove it from the list
   season.pop
+  season.pop
   season = season.reverse
   puts season.length
   while season.length > 0 do
@@ -100,6 +111,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   puts "season 5"
   season = reviews.search('.grade.letter.tv').reverse
   season.pop # the latest episode is at the top of every page, remove it from the list
+  season.pop
   season.pop
   season = season.reverse
   puts season.length

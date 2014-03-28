@@ -38,7 +38,8 @@ tvGraph = Graph.new
 
 
 
-# AV Club Grades: A, A-, B+, B, B-, C+, C, C-, D+, D, 
+# AV Club Grades: A, A-, B+, B, B-, C+, C, C-, D+, D, D-, F
+# on metacritic, they correspond with: 100, 91, 83, 80, 75, 70, 67, 60, 58, 50, 42, 40 (SKIP), 33, 25, 16, 0
 
 # Put these lines back in afterwards
 #puts "Enter the name of a television show (be sure to capitalize)"
@@ -52,11 +53,25 @@ agent.get('http://www.avclub.com/tv/') do |page|
 
   reviews = search_result.link_with(text: _show).click
 
-  seasonOne = reviews.link_with(class: "badge season-1").click
-  puts seasonOne.uri
+  puts "season 1"
+  puts reviews.link_with(class: "badge season-1" || "active badge season-1").click.search('.grade.letter.tv')
+  puts "season 2"
+  puts reviews.link_with(class: "badge season-2" || "active badge season-2").click.search('.grade.letter.tv')
+  puts "season 3"
+  puts reviews.link_with(class: "badge season-3" || "active badge season-3").click.search('.grade.letter.tv')
+  puts "season 4"
+  puts reviews.link_with(class: "badge season-4" || "active badge season-4").click.search('.grade.letter.tv')
+  puts "season 5"
+  puts reviews.link_with(class: "badge season-5" || "active badge season-5").click.search('.grade.letter.tv')
+
+  #seasonOne = reviews.link_with(class: "badge season-1").click
+  #puts seasonOne.uri
 
   # we're looking for div class = 'grade letter  tv'
-  puts seasonOne.search('.grade.letter.tv')
+  #puts seasonOne.search('.grade.letter.tv')
+
+
+  puts reviews.search('tvSeasonButton')
 
 
 end

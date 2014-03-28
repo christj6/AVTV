@@ -57,7 +57,8 @@ agent.get('http://www.avclub.com/tv/') do |page|
 
 
   grades = Array.new
-  graph = Hash.new
+  graphX = Array.new
+  graphY = Array.new
 
   #puts "season 1"
   season = reviews.link_with(class: "badge season-1").click.search('.grade.letter.tv').reverse
@@ -99,39 +100,41 @@ agent.get('http://www.avclub.com/tv/') do |page|
   	grades.push(season.pop.inner_text())
   end
 
-  #puts grades
-
   while grades.length > 0 do
   	case grades.pop
   	when "A"
-  		puts "11"
+  		graphY.push(11)
   	when "A-"
-  		puts "10"
+  		graphY.push(10)
   	when "B+"
-  		puts "9"
+  		graphY.push(9)
   	when "B"
-  		puts "8"
+  		graphY.push(8)
   	when "B-"
-  		puts "7"
+  		graphY.push(7)
   	when "C+"
-  		puts "6"
+  		graphY.push(6)
   	when "C"
-  		puts "5"
+  		graphY.push(5)
   	when "C-"
-  		puts "4"
+  		graphY.push(4)
   	when "D+"
-  		puts "3"
+  		graphY.push(3)
   	when "D"
-  		puts "2"
+  		graphY.push(2)
   	when "D-"
-  		puts "1"
+  		graphY.push(1)
   	when "F"
-  		puts "0"
+  		graphY.push(0)
   	else
-  		puts "test"
+  		puts "error"
   	end
   end
 
+graphX = [0..graphY.length-1]
+
+puts graphX
+puts graphY
   
   
   

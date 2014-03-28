@@ -54,15 +54,15 @@ agent.get('http://www.avclub.com/tv/') do |page|
   reviews = search_result.link_with(text: _show).click
 
   puts "season 1"
-  puts reviews.link_with(class: "badge season-1" || "active badge season-1").click.search('.grade.letter.tv')
+  puts reviews.link_with(class: "badge season-1").click.search('.grade.letter.tv')
   puts "season 2"
-  puts reviews.link_with(class: "badge season-2" || "active badge season-2").click.search('.grade.letter.tv')
+  puts reviews.link_with(class: "badge season-2").click.search('.grade.letter.tv')
   puts "season 3"
-  puts reviews.link_with(class: "badge season-3" || "active badge season-3").click.search('.grade.letter.tv')
+  puts reviews.link_with(class: "badge season-3").click.search('.grade.letter.tv')
   puts "season 4"
-  puts reviews.link_with(class: "badge season-4" || "active badge season-4").click.search('.grade.letter.tv')
+  puts reviews.link_with(class: "badge season-4").click.search('.grade.letter.tv')
   puts "season 5"
-  puts reviews.link_with(class: "badge season-5" || "active badge season-5").click.search('.grade.letter.tv')
+  puts reviews.search('.grade.letter.tv')
 
   #seasonOne = reviews.link_with(class: "badge season-1").click
   #puts seasonOne.uri

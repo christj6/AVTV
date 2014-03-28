@@ -58,35 +58,51 @@ agent.get('http://www.avclub.com/tv/') do |page|
 
   grades = Array.new
 
-  puts "season 1"
+  #puts "season 1"
   season = reviews.link_with(class: "badge season-1").click.search('.grade.letter.tv').reverse
   season.pop # the latest episode is at the top of every page, remove it from the list
   season = season.reverse
   while season.length > 0 do
   	grades.push(season.pop.inner_text())
   end
-  puts grades
 
-
-  puts "season 2"
+  #puts "season 2"
   season = reviews.link_with(class: "badge season-2").click.search('.grade.letter.tv').reverse
-  season.pop
-  puts season
+  season.pop # the latest episode is at the top of every page, remove it from the list
+  season = season.reverse
+  while season.length > 0 do
+  	grades.push(season.pop.inner_text())
+  end
 
-  puts "season 3"
+  #puts "season 3"
   season = reviews.link_with(class: "badge season-3").click.search('.grade.letter.tv').reverse
-  season.pop
-  puts season
+  season.pop # the latest episode is at the top of every page, remove it from the list
+  season = season.reverse
+  while season.length > 0 do
+  	grades.push(season.pop.inner_text())
+  end
 
-  puts "season 4"
+  #puts "season 4"
   season = reviews.link_with(class: "badge season-4").click.search('.grade.letter.tv').reverse
-  season.pop
-  puts season
+  season.pop # the latest episode is at the top of every page, remove it from the list
+  season = season.reverse
+  while season.length > 0 do
+  	grades.push(season.pop.inner_text())
+  end
 
-  puts "season 5"
+  #puts "season 5"
   season = reviews.search('.grade.letter.tv').reverse
-  season.pop
-  puts season
+  season.pop # the latest episode is at the top of every page, remove it from the list
+  season = season.reverse
+  while season.length > 0 do
+  	grades.push(season.pop.inner_text())
+  end
+
+  #puts grades
+
+  while grades.length > 0 do
+  	grades.pop
+  end
 
   
   

@@ -138,10 +138,12 @@ graphX = [0..graphY.length-1]
   
 for i in 0..11
 	for j in 0..graphY.length-1
-		if i == j then
-			print " "
-		else
+		_yFlip = 11 - i; # flips the value, since the graph counts upside down
+
+		if graphY[graphY.length - j] == _yFlip then
 			print "."
+		else
+			print " "
 		end
 		STDOUT.flush
 	end

@@ -41,7 +41,8 @@ agent = Mechanize.new
 # on metacritic, they correspond with: 100, 91, 83, 80, 75, 70, 67, 60, 58, 50, 42, 40 (SKIP), 33, 25, 16, 0
 
 # Put these lines back in afterwards
-puts "Enter the name of a television show. Be sure to capitalize the first letter of each word: for example, Person Of Interest, not Person of Interest."
+puts "Enter the name of a television show. Be sure to capitalize it exactly as it appears on AV Club: Person Of Interest, not Person of Interest."
+puts "or: Game Of Thrones (experts), not Game of Thrones."
 _show = gets.chomp
 #_show = 'Breaking Bad'
 

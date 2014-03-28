@@ -12,6 +12,7 @@ agent = Mechanize.new
 
 #array = Hash.new # stores 2 dimensional array in hash, uses coordinates as hash function
 
+=begin # erase this line and the line that starts with =end to get the class back
 class Graph
 	@show 
 	@url
@@ -29,8 +30,9 @@ class Graph
 		puts "blah"
 	end
 end
+=end
 
-tvGraph = Graph.new
+#tvGraph = Graph.new
 
 #tvGraph.print
 
@@ -52,13 +54,18 @@ agent.get('http://www.avclub.com/tv/') do |page|
   end.submit
 
   reviews = search_result.link_with(text: _show).click
-  
-  #eliminate ' <div class="grade letter  tv"> '
+
+
+  grades = Array.new
 
   puts "season 1"
-  season = reviews.link_with(class: "badge season-1").click.search('.grade.letter.tv').reverse
-  season.pop
-  puts season
+  season = reviews.link_with(class: "badge season-1").click.search('.grade.letter.tv')
+  
+  while season.length > 0 do
+  	grades.push(season.pop.inner_text())
+  end
+  puts grades
+
 
   puts "season 2"
   season = reviews.link_with(class: "badge season-2").click.search('.grade.letter.tv').reverse

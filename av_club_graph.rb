@@ -74,7 +74,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
 	  season.pop # maybe implement something where you fetch the top episode's ID and make sure the last one isn't that,
 	  season.pop # except in the caes of the final season/latest season of the show where it is.
 	  season = season.reverse
-	  puts season.length
+	  puts season.length.to_s + " episodes"
 	  while season.length > 0 do
 	  	grades.push(season.pop.inner_text())
 	  end

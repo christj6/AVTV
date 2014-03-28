@@ -62,7 +62,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   puts "" # make it easier on the eyes
 
   if results.length > 1
-  	puts "Which one is it?"
+  	puts "Which one is it? Enter the corresponding number."
   	userChoice = gets.chomp
   	reviews = search_result.link_with(text: results[userChoice.to_i-1].inner_html).click
   else
@@ -133,6 +133,18 @@ agent.get('http://www.avclub.com/tv/') do |page|
   		graphY.push(-1) # Sopranos Season 5 has no reviews. This allows the contour to skip over season 5, but still present the gap.
   	end
   end
+
+  	# writes a text file containing the numbers corresponding to each grade
+    begin
+	  file = File.open("numberList.txt", "w")
+	  for i in 0..graphY.length-1
+	  	file.write(graphY[i].to_s + "\n")
+	  end 
+	rescue IOError => e
+	  #some error occur, dir not writable etc.
+	ensure
+	  file.close unless file == nil
+	end
 
 
 

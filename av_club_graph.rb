@@ -60,45 +60,56 @@ agent.get('http://www.avclub.com/tv/') do |page|
   graphX = Array.new
   graphY = Array.new
 
-  #puts "season 1"
+  puts "season 1"
   season = reviews.link_with(class: "badge season-1").click.search('.grade.letter.tv').reverse
   season.pop # the latest episode is at the top of every page, remove it from the list
+  season.pop
   season = season.reverse
+  puts season
   while season.length > 0 do
   	grades.push(season.pop.inner_text())
   end
 
-  #puts "season 2"
+  puts "season 2"
   season = reviews.link_with(class: "badge season-2").click.search('.grade.letter.tv').reverse
   season.pop # the latest episode is at the top of every page, remove it from the list
+  season.pop
   season = season.reverse
+  puts season
   while season.length > 0 do
   	grades.push(season.pop.inner_text())
   end
 
-  #puts "season 3"
+  puts "season 3"
   season = reviews.link_with(class: "badge season-3").click.search('.grade.letter.tv').reverse
   season.pop # the latest episode is at the top of every page, remove it from the list
+  season.pop
   season = season.reverse
+  puts season
   while season.length > 0 do
   	grades.push(season.pop.inner_text())
   end
 
-  #puts "season 4"
+  puts "season 4"
   season = reviews.link_with(class: "badge season-4").click.search('.grade.letter.tv').reverse
   season.pop # the latest episode is at the top of every page, remove it from the list
+  season.pop
   season = season.reverse
+  puts season
   while season.length > 0 do
   	grades.push(season.pop.inner_text())
   end
 
-  #puts "season 5"
+  puts "season 5"
   season = reviews.search('.grade.letter.tv').reverse
   season.pop # the latest episode is at the top of every page, remove it from the list
+  season.pop
   season = season.reverse
+  puts season
   while season.length > 0 do
   	grades.push(season.pop.inner_text())
   end
+
 
   while grades.length > 0 do
   	case grades.pop
@@ -131,16 +142,12 @@ agent.get('http://www.avclub.com/tv/') do |page|
   	end
   end
 
-graphX = [0..graphY.length-1]
-
-#puts graphX
-#puts graphY
   
 for i in 0..11
 	for j in 0..graphY.length-1
 		_yFlip = 11 - i; # flips the value, since the graph counts upside down
 
-		if graphY[graphY.length - j] == _yFlip then
+		if graphY[graphY.length-1 - j] == _yFlip then
 			print "."
 		else
 			print " "

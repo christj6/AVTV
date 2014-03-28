@@ -41,7 +41,7 @@ agent = Mechanize.new
 # on metacritic, they correspond with: 100, 91, 83, 80, 75, 70, 67, 60, 58, 50, 42, 40 (SKIP), 33, 25, 16, 0
 
 # Put these lines back in afterwards
-puts "Enter the name of a television show (be sure to capitalize)"
+puts "Enter the name of a television show. Be sure to capitalize the first letter of each word: for example, Person Of Interest, not Person of Interest."
 _show = gets.chomp
 #_show = 'Breaking Bad'
 
@@ -80,16 +80,9 @@ agent.get('http://www.avclub.com/tv/') do |page|
 	  end
   end
 
-  #pushSeason(4, reviews, grades, validSeasons)
-  #pushSeason(3, reviews, grades, validSeasons)
-  #pushSeason(2, reviews, grades, validSeasons)
-  #pushSeason(1, reviews, grades, validSeasons)
-  #pushSeason(0, reviews, grades, validSeasons)
-
   for i in 0..validSeasons.length-1
   	pushSeason(validSeasons.length-1 - i, reviews, grades, validSeasons)
   end
-
 
   while grades.length > 0 do
   	case grades.pop
@@ -118,7 +111,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   	when "F"
   		graphY.push(0)
   	else
-  		puts "error"
+  		# error
   	end
   end
 

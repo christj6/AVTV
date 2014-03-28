@@ -133,10 +133,20 @@ agent.get('http://www.avclub.com/tv/') do |page|
 
 graphX = [0..graphY.length-1]
 
-puts graphX
-puts graphY
+#puts graphX
+#puts graphY
   
-  
+for i in 0..11
+	for j in 0..graphY.length-1
+		if i == j then
+			print " "
+		else
+			print "."
+		end
+		STDOUT.flush
+	end
+	puts ""
+end
   
   
 

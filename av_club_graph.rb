@@ -66,61 +66,29 @@ agent.get('http://www.avclub.com/tv/') do |page|
   puts validSeasons
   # end testing
 
-  puts "season 1"
-  season = reviews.link_with(class: "badge season-1").click.search('.grade.letter.tv').reverse
-  season.pop # the latest episode is at the top of every page, remove it from the list
-  season.pop
-  season.pop
-  season = season.reverse
-  puts season.length
-  while season.length > 0 do
-  	grades.push(season.pop.inner_text())
-  end
-  
-
-  puts "season 2"
-  season = reviews.link_with(class: "badge season-2").click.search('.grade.letter.tv').reverse
-  season.pop # the latest episode is at the top of every page, remove it from the list
-  season.pop
-  season.pop
-  season = season.reverse
-  puts season.length
-  while season.length > 0 do
-  	grades.push(season.pop.inner_text())
+  # this function takes a given TV season and pushes it onto the Grades array
+  def pushSeason (index, reviews, grades, validSeasons)
+  	  puts "season " + validSeasons[index].inner_html
+	  if index != 0 then
+	  	season = reviews.link_with(class: "badge season-" + validSeasons[index].inner_html).click.search('.grade.letter.tv').reverse
+	  else
+	  	season = reviews.search('.grade.letter.tv').reverse
+	  end
+	  season.pop # the latest episode is at the top of every page, remove it from the list
+	  season.pop # maybe implement something where you fetch the top episode's ID and make sure the last one isn't that,
+	  season.pop # except in the caes of the final season/latest season of the show where it is.
+	  season = season.reverse
+	  puts season.length
+	  while season.length > 0 do
+	  	grades.push(season.pop.inner_text())
+	  end
   end
 
-  puts "season 3"
-  season = reviews.link_with(class: "badge season-3").click.search('.grade.letter.tv').reverse
-  season.pop # the latest episode is at the top of every page, remove it from the list
-  season.pop
-  season.pop
-  season = season.reverse
-  puts season.length
-  while season.length > 0 do
-  	grades.push(season.pop.inner_text())
-  end
-
-  puts "season 4"
-  season = reviews.link_with(class: "badge season-4").click.search('.grade.letter.tv').reverse
-  season.pop # the latest episode is at the top of every page, remove it from the list
-  season.pop
-  season.pop
-  season = season.reverse
-  puts season.length
-  while season.length > 0 do
-  	grades.push(season.pop.inner_text())
-  end
-
-  puts "season 5"
-  season = reviews.search('.grade.letter.tv').reverse
-  season.pop # the latest episode is at the top of every page, remove it from the list
-  season.pop
-  season.pop
-  season = season.reverse
-  puts season.length
-  while season.length > 0 do
-  	grades.push(season.pop.inner_text())
-  end
+  pushSeason(4, reviews, grades, validSeasons)
+  pushSeason(3, reviews, grades, validSeasons)
+  pushSeason(2, reviews, grades, validSeasons)
+  pushSeason(1, reviews, grades, validSeasons)
+  pushSeason(0, reviews, grades, validSeasons)
 
 
   while grades.length > 0 do

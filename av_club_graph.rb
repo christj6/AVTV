@@ -50,12 +50,12 @@ agent.get('http://www.avclub.com/tv/') do |page|
     search.q = _show
   end.submit
 
-  #reviews = page.link_with(text: '').click
-  #puts review.uri
+  reviews = search_result.link_with(text: _show)
+  puts reviews
 
-  search_result.links.with(:href => '/tv/breaking-bad/').each do |link|
-    puts link.text
-  end
+  #search_result.links.with(:href => '/tv/breaking-bad/').each do |link|
+    #puts link.text
+  #end
 
 
 end

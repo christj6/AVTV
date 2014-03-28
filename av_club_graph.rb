@@ -41,17 +41,18 @@ agent = Mechanize.new
 # on metacritic, they correspond with: 100, 91, 83, 80, 75, 70, 67, 60, 58, 50, 42, 40 (SKIP), 33, 25, 16, 0
 
 # Put these lines back in afterwards
-puts "Enter the name of a television show. Be sure to capitalize it exactly as it appears on AV Club: Person Of Interest, not Person of Interest."
-puts "or: Game Of Thrones (experts), not Game of Thrones."
+puts "Enter the name of a television show."
 _show = gets.chomp
-#_show = 'Breaking Bad'
 
 agent.get('http://www.avclub.com/tv/') do |page|
   search_result = page.form_with(:action => '/search/') do |search|
     search.q = _show
   end.submit
 
-  reviews = search_result.link_with(text: _show).click
+  # grab exact spelling of show so the user doesn't have to capitalize it exactly
+  page = Nokogiri::HTML(open(search_result.uri.to_s))
+  firstResult = page.css('section ul li a')[0]
+  reviews = search_result.link_with(text: firstResult.inner_html).click
 
 
   grades = Array.new

@@ -7,7 +7,7 @@ require 'mechanize'
    
  
 
-page = Nokogiri::HTML(open('http://www.avclub.com/tv/'))   
+#page = Nokogiri::HTML(open('http://www.avclub.com/tv/'))   
 agent = Mechanize.new
 
 #array = Hash.new # stores 2 dimensional array in hash, uses coordinates as hash function
@@ -41,17 +41,21 @@ tvGraph = Graph.new
 
 
 # Put these lines back in afterwards
-#puts "Enter the name of a television show"
+#puts "Enter the name of a television show (be sure to capitalize)"
 #_show = gets.chomp
-_show = 'breaking bad'
+_show = 'Breaking Bad'
 
 agent.get('http://www.avclub.com/tv/') do |page|
   search_result = page.form_with(:action => '/search/') do |search|
     search.q = _show
   end.submit
 
-  reviews = search_result.link_with(text: _show)
-  puts reviews
+  reviews = search_result.link_with(text: _show).click
+
+  seasonOne = reviews.link_with(class: "badge season-1").click
+  puts seasonOne.uri
+
+  firstEpisode = seasonOne.link_with(class: "badge season-1").click
 
   #search_result.links.with(:href => '/tv/breaking-bad/').each do |link|
     #puts link.text

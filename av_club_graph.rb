@@ -111,7 +111,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   	when "F"
   		graphY.push(0)
   	else
-  		# error
+  		graphY.push(-1) # Sopranos Season 5 has no reviews. This allows the contour to skip over season 5, but still present the gap.
   	end
   end
 

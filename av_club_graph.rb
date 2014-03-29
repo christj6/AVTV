@@ -76,6 +76,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   grades = Array.new 
   graphY = Array.new
   validSeasons = Array.new # array of integers reflecting the season numbers in the tvSeasonButton elements on each show's reviews page.
+  episodesPerSeason = Array.new # index 0 stores # of eps in season 1, etc.
 
   #fetch the number of TV Season buttons on the show's page
   page = Nokogiri::HTML(open(reviews.uri.to_s))
@@ -83,7 +84,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
 
 
   # this function takes a given TV season and pushes it onto the Grades array
-  def pushSeason (index, reviews, grades, validSeasons)
+  def pushSeason (index, reviews, grades, validSeasons, episodesPerSeason)
   	  puts "season " + validSeasons[index].inner_html
 	  if index != 0 then
 	  	season = reviews.link_with(class: "badge season-" + validSeasons[index].inner_html).click.search('.grade.letter.tv').reverse
@@ -95,13 +96,14 @@ agent.get('http://www.avclub.com/tv/') do |page|
 	  season.pop # except in the caes of the final season/latest season of the show where it is.
 	  season = season.reverse
 	  puts season.length.to_s + " episodes"
+	  episodesPerSeason.push(season.length.to_i)
 	  while season.length > 0 do
 	  	grades.push(season.pop.inner_text())
 	  end
   end
 
   for i in 0..validSeasons.length-1
-  	pushSeason(validSeasons.length-1 - i, reviews, grades, validSeasons)
+  	pushSeason(validSeasons.length-1 - i, reviews, grades, validSeasons, episodesPerSeason)
   end
 
   while grades.length > 0 do
@@ -171,6 +173,16 @@ for i in 0..11
 end
 =end
 
+#episodesPerSeason = episodesPerSeason.reverse
+tickMarks = Array.new
+
+for i in 0..episodesPerSeason.length-1
+	for j in 0..i
+		#
+		tickMarks[i] = tickMarks[i].to_i + episodesPerSeason[j].to_i
+	end
+end
+
  for i in 0..12
 	for j in 0..(graphY.length-1 + 2)
 
@@ -213,10 +225,18 @@ end
 					_yFlip = 11 - i; # flips the value, since the graph counts upside down
 
 					if graphY[graphY.length-1 - j + 2] == _yFlip then
-						print "X "
+						print "O"
 					else
-						print "- "
+						print "-"
 					end
+
+					# put down the vertical bars to separate seasons
+					if tickMarks.include? j-1
+						print "|"
+					else
+						print " "
+					end
+					# end vertical bar loop
 				end
 			end
 		end

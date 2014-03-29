@@ -26,21 +26,40 @@ agent.get('http://www.imdb.com/') do |page|
   #puts directorPage.uri.to_s
   movieLinks = page.css('b a')
 
+  # storing the data
+  titles = Array.new
+  runTimes = Array.new
+
   for i in 0..movieLinks.length-1
   	#
   	if movieLinks[i].to_s.include? "dr_" # retrieve the movies he/she directed
   		#puts movieLinks[i]
-  		#moviePage = directorPage.link_with(text: movieLinks[i].inner_html).click
 
-  		puts directorPage.link_with(text: movieLinks[i].inner_html)
+  		title = directorPage.link_with(text: movieLinks[i].inner_html).to_s
+  		moviePage = directorPage.link_with(text: title).click
+  		page = Nokogiri::HTML(open(moviePage.uri.to_s))
+  		runTime = page.css('time').inner_html.to_s
+  		#puts title + ": " + runTime
+  		#if runTime.includes? "\n"
+  		runTime = runTime.delete("min")
+  		runTime = runTime.delete(' ')
 
-  		#page = Nokogiri::HTML(open(moviePage.uri.to_s))
-  		#runTime = page.css('time').to_s
-  		#puts runTime
+  		titles.push(title)
+  		runTimes.push(runTime.to_i)
+
+
+  		#if i > 1
+  			#
+  			#if titles[i].includes? titles[i-1]
+  				#puts runTime.to_s
+  			#end
+  		#end
+
   	end
   end
 
-
+puts titles
+puts runTimes
   
 
 

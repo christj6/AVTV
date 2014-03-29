@@ -6,6 +6,16 @@ require 'nokogiri'
 require 'open-uri'
 require 'mechanize'
    
+class Movie
+	@@numberOfMovies = 0
+
+	def initialize (title, runTime)
+		#
+		#@director = director
+		@title = title
+		@runTime = runTime
+	end
+end
 
 agent = Mechanize.new
 
@@ -27,8 +37,9 @@ agent.get('http://www.imdb.com/') do |page|
   movieLinks = page.css('b a')
 
   # storing the data
-  titles = Array.new
-  runTimes = Array.new
+  #titles = Array.new
+  #runTimes = Array.new
+  filmList = Array.new
 
   for i in 0..movieLinks.length-1
   	#
@@ -44,9 +55,11 @@ agent.get('http://www.imdb.com/') do |page|
   		runTime = runTime.delete("min")
   		runTime = runTime.delete(' ')
 
-  		titles.push(title)
-  		runTimes.push(runTime.to_i)
-
+  		if runTime.to_i < 60 # 60 minutes is the cut off point for a feature film
+  			# movie too short, do nothing
+  		else
+  			filmList.push(Movie.new(title, runTime.to_i))
+  		end
 
   		#if i > 1
   			#
@@ -58,8 +71,7 @@ agent.get('http://www.imdb.com/') do |page|
   	end
   end
 
-puts titles
-puts runTimes
+#puts filmList.title # crashes
   
 
 

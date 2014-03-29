@@ -72,9 +72,9 @@ agent.get('http://www.avclub.com/tv/') do |page|
   puts "" # make it easier on the eyes
 
 
-  grades = Array.new
+  grades = Array.new 
   graphY = Array.new
-  validSeasons = Array.new
+  validSeasons = Array.new # array of integers reflecting the season numbers in the tvSeasonButton elements on each show's reviews page.
 
   #fetch the number of TV Season buttons on the show's page
   page = Nokogiri::HTML(open(reviews.uri.to_s))
@@ -146,8 +146,14 @@ agent.get('http://www.avclub.com/tv/') do |page|
 	  file.close unless file == nil
 	end
 
+	puts ""
+  	puts ""
+  	puts ""
+  	#puts ""
+
 
   # this prints the values corresponding with each AV Club grade in ascii format
+=begin
 for i in 0..11
 	for j in 0..graphY.length-1
 		_yFlip = 11 - i; # flips the value, since the graph counts upside down
@@ -162,20 +168,63 @@ for i in 0..11
 	puts ""
 	#puts ""
 end
-
-=begin
- for i in 0..graphY.length-1
- 	for j in 0..11
- 		#
- 		if graphY[i] == j
- 			print "x "
- 		else
- 			print "  "
- 		end
- 		STDOUT.flush
- 	end
- 	puts ""
- end
 =end
+
+ for i in 0..12
+	for j in 0..(graphY.length-1 + 2)
+
+		if i == 12 && j > 1
+			print "--"
+		else
+			if j == 0
+				case i
+				when 0
+					print "A "
+				when 1
+					print "A-"
+				when 2
+					print "B+"
+				when 3
+					print "B "
+				when 4
+					print "B-"
+				when 5
+					print "C+"
+				when 6
+					print "C "
+				when 7
+					print "C-"
+				when 8
+					print "D+"
+				when 9
+					print "D "
+				when 10
+					print "D-"
+				when 11
+					print "F "
+				else
+					print "  "
+				end
+			else
+				if j == 1
+					print "|"
+				else
+					_yFlip = 11 - i; # flips the value, since the graph counts upside down
+
+					if graphY[graphY.length-1 - j + 2] == _yFlip then
+						print "X "
+					else
+						print "- "
+					end
+				end
+			end
+		end
+		
+		STDOUT.flush
+	end
+	puts ""
+	#puts ""
+end
+
 
 end

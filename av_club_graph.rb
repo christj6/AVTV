@@ -64,7 +64,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   if results.length > 1
   	puts "Which one is it? Enter the corresponding number."
   	userChoice = gets.chomp
-  	userChoice = userChoice.gsub! '&amp;','&'
+  	#userChoice = userChoice.gsub! '&amp;','&'
   	reviews = search_result.link_with(text: results[userChoice.to_i-1].inner_html).click
   else
   	reviews = search_result.link_with(text: results[0].inner_html).click

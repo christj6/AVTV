@@ -40,7 +40,6 @@ agent = Mechanize.new
 # AV Club Grades: A, A-, B+, B, B-, C+, C, C-, D+, D, D-, F
 # on metacritic, they correspond with: 100, 91, 83, 80, 75, 70, 67, 60, 58, 50, 42, 40 (SKIP), 33, 25, 16, 0
 
-# Put these lines back in afterwards
 puts "Enter the name of a television show."
 _show = gets.chomp
 
@@ -150,31 +149,12 @@ agent.get('http://www.avclub.com/tv/') do |page|
 	end
 
 	puts ""
+  	puts "" # make it easier on the eyes
   	puts ""
-  	puts ""
-  	#puts ""
 
-
-  # this prints the values corresponding with each AV Club grade in ascii format
-=begin
-for i in 0..11
-	for j in 0..graphY.length-1
-		_yFlip = 11 - i; # flips the value, since the graph counts upside down
-
-		if graphY[graphY.length-1 - j] == _yFlip then
-			print "X "
-		else
-			print ". "
-		end
-		STDOUT.flush
-	end
-	puts ""
-	#puts ""
-end
-=end
-
-#episodesPerSeason = episodesPerSeason.reverse
-tickMarks = Array.new
+tickMarks = Array.new # stores the sum of the previous seasons (used to drop tick marks at season divisions)
+# for example, breaking bad has 5 seasons, each containing: 7, 13, 13, 13, and 16 episdoes, respectively.
+# In this case, tickMarks would store numbers: 7, 20, 33, 46, 62 in indexes 0, 1, 2, 3, 4.
 
 for i in 0..episodesPerSeason.length-1
 	for j in 0..i
@@ -190,6 +170,7 @@ end
 			print "--"
 		else
 			if j == 0
+				# fill the left edge of the graph with grades corresponding to each row.
 				case i
 				when 0
 					print "A "
@@ -220,21 +201,21 @@ end
 				end
 			else
 				if j == 1
-					print "|"
+					print "|" # drop a vertical line down to separate the grades from the start of the graph proper.
 				else
 					_yFlip = 11 - i; # flips the value, since the graph counts upside down
 
 					if graphY[graphY.length-1 - j + 2] == _yFlip then
-						print "O"
+						print "O" # the episode's grade is right here
 					else
-						print "-"
+						print "-" # blank space
 					end
 
 					# put down the vertical bars to separate seasons
 					if tickMarks.include? j-1
 						print "|"
 					else
-						print " "
+						print " " # no need to drop a bar here
 					end
 					# end vertical bar loop
 				end

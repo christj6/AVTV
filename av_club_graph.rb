@@ -147,7 +147,6 @@ agent.get('http://www.avclub.com/tv/') do |page|
 	end
 
 
-
   # this prints the values corresponding with each AV Club grade in ascii format
 for i in 0..11
 	for j in 0..graphY.length-1
@@ -156,16 +155,27 @@ for i in 0..11
 		if graphY[graphY.length-1 - j] == _yFlip then
 			print "X "
 		else
-			print "  "
+			print ". "
 		end
 		STDOUT.flush
 	end
 	puts ""
+	#puts ""
 end
-  
-  
 
-
-
+=begin
+ for i in 0..graphY.length-1
+ 	for j in 0..11
+ 		#
+ 		if graphY[i] == j
+ 			print "x "
+ 		else
+ 			print "  "
+ 		end
+ 		STDOUT.flush
+ 	end
+ 	puts ""
+ end
+=end
 
 end

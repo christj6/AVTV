@@ -7,7 +7,7 @@ require 'open-uri'
 require 'mechanize'
    
 class Movie
-	@@numberOfMovies = 0
+	#@@numberOfMovies = 0
 
 	def initialize (title, runTime)
 		#
@@ -37,8 +37,8 @@ agent.get('http://www.imdb.com/') do |page|
   movieLinks = page.css('b a')
 
   # storing the data
-  #titles = Array.new
-  #runTimes = Array.new
+  titles = Array.new
+  runTimes = Array.new
   filmList = Array.new
 
   for i in 0..movieLinks.length-1
@@ -55,25 +55,51 @@ agent.get('http://www.imdb.com/') do |page|
   		runTime = runTime.delete("min")
   		runTime = runTime.delete(' ')
 
-  		if runTime.to_i < 60 # 60 minutes is the cut off point for a feature film
+  		if runTime.to_i < 91 # 91 minutes is the cut off point for a feature film, until I work out how to parse a work's page and determine if it's a tv show or short film or something.
   			# movie too short, do nothing
   		else
-  			filmList.push(Movie.new(title, runTime.to_i))
+  			#filmList.push(Movie.new(title, runTime.to_i))
+  			titles.push(title)
+  			runTimes.push(runTime.to_i)
   		end
-
-  		#if i > 1
-  			#
-  			#if titles[i].includes? titles[i-1]
-  				#puts runTime.to_s
-  			#end
-  		#end
 
   	end
   end
 
 #puts filmList.title # crashes
+
+titles = titles.reverse
+runTimes = runTimes.reverse
+
+for i in 0..titles.length-1
+	print titles[i].to_s
+	print " -- "
+	print runTimes[i].to_s
+	print " minutes"
+	puts ""
+end
+
+#titles = titles.reverse
+#runTimes = runTimes.reverse
+
+for i in 0..200
+	#
+	for j in 0..titles.length-1
+		#
+		if runTimes[j].to_i == i
+			print titles[j].to_s
+			print " is "
+			print i.to_s
+			print " minutes long."
+		else
+			print i.to_s
+		end
+	end
+	puts ""
+end
+
   
 
 
 
- end
+end

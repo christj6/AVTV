@@ -19,9 +19,9 @@ end
 
 agent = Mechanize.new
 
-#puts "Enter the name of a film director"
-#_searchTerm = gets.chomp
-_searchTerm = "Paul Thomas Anderson"
+puts "Enter the name of a film director"
+_searchTerm = gets.chomp
+#_searchTerm = "Ethan Coen"
 
 agent.get('http://www.imdb.com/') do |page|
   search_result = page.form_with(:action => '/find') do |search|
@@ -82,6 +82,7 @@ end
 #titles = titles.reverse
 #runTimes = runTimes.reverse
 
+=begin
 for i in 0..200
 	#
 	for j in 0..titles.length-1
@@ -90,13 +91,14 @@ for i in 0..200
 			print titles[j].to_s
 			print " is "
 			print i.to_s
-			print " minutes long."
+			print " minutes long. "
 		else
 			#print i.to_s
 		end
 	end
 	puts ""
 end
+=end
 
   
 

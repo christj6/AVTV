@@ -92,7 +92,7 @@ for i in 0..200
 			print i.to_s
 			print " minutes long."
 		else
-			print i.to_s
+			#print i.to_s
 		end
 	end
 	puts ""

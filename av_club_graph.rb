@@ -106,7 +106,17 @@ agent.get('http://www.avclub.com/tv/') do |page|
   	else
   		season = reviews.search('.grade.letter.tv').reverse
   	end
-	  season.pop # the latest episode is at the top of every page, remove it from the list
+
+  	topJunk = season[season.size - 1] # grabs top element from array
+
+  	while season[season.size - 1] == topJunk
+  		season.pop
+  	end
+
+  	season.pop
+
+  	#season.delete(topJunk)
+	  #season.pop # the latest episode is at the top of every page, remove it from the list
 
 	  # for some reason, every couple of days I will test this program and this section messes me up.
 	  # Some days it needs 3 pops to get the right number of episodes, other days it needs 1 pop.

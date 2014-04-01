@@ -31,7 +31,7 @@ require 'rubygems'
 require 'nokogiri' 
 require 'open-uri'
 require 'mechanize'
-   
+
 
 agent = Mechanize.new
 
@@ -44,9 +44,9 @@ puts "Enter the name of a television show."
 _show = gets.chomp
 
 agent.get('http://www.avclub.com/tv/') do |page|
-  search_result = page.form_with(:action => '/search/') do |search|
-    search.q = _show
-  end.submit
+	search_result = page.form_with(:action => '/search/') do |search|
+		search.q = _show
+	end.submit
 
   # grab exact spelling of show so the user doesn't have to capitalize it exactly
   page = Nokogiri::HTML(open(search_result.uri.to_s))
@@ -84,68 +84,73 @@ agent.get('http://www.avclub.com/tv/') do |page|
 
   # this function takes a given TV season and pushes it onto the Grades array
   def pushSeason (index, reviews, grades, validSeasons, episodesPerSeason)
-  	  puts "season " + validSeasons[index].inner_html
-	  if index != 0 then
-	  	season = reviews.link_with(class: "badge season-" + validSeasons[index].inner_html).click.search('.grade.letter.tv').reverse
-	  else
-	  	season = reviews.search('.grade.letter.tv').reverse
-	  end
+  	puts "season " + validSeasons[index].inner_html
+  	if index != 0 then
+  		season = reviews.link_with(class: "badge season-" + validSeasons[index].inner_html).click.search('.grade.letter.tv').reverse
+  	else
+  		season = reviews.search('.grade.letter.tv').reverse
+  	end
 	  season.pop # the latest episode is at the top of every page, remove it from the list
-	  season.pop # maybe implement something where you fetch the top episode's ID and make sure the last one isn't that,
-	  season.pop # except in the caes of the final season/latest season of the show where it is.
+
+	  # for some reason, every couple of days I will test this program and this section messes me up.
+	  # Some days it needs 3 pops to get the right number of episodes, other days it needs 1 pop.
+	  # There's probably a better way of removing duplicates, but I have yet to implement that. Definitely on the to-do list.
+
+	  #season.pop # maybe implement something where you fetch the top episode's ID and make sure the last one isn't that,
+	  #season.pop # except in the caes of the final season/latest season of the show where it is.
 	  season = season.reverse
 	  puts season.length.to_s + " episodes"
 	  episodesPerSeason.push(season.length.to_i)
 	  while season.length > 0 do
 	  	grades.push(season.pop.inner_text())
 	  end
-  end
+	end
 
-  for i in 0..validSeasons.length-1
-  	pushSeason(validSeasons.length-1 - i, reviews, grades, validSeasons, episodesPerSeason)
-  end
+	for i in 0..validSeasons.length-1
+		pushSeason(validSeasons.length-1 - i, reviews, grades, validSeasons, episodesPerSeason)
+	end
 
-  while grades.length > 0 do
-  	case grades.pop
-  	when "A"
-  		graphY.push(11)
-  	when "A-"
-  		graphY.push(10)
-  	when "B+"
-  		graphY.push(9)
-  	when "B"
-  		graphY.push(8)
-  	when "B-"
-  		graphY.push(7)
-  	when "C+"
-  		graphY.push(6)
-  	when "C"
-  		graphY.push(5)
-  	when "C-"
-  		graphY.push(4)
-  	when "D+"
-  		graphY.push(3)
-  	when "D"
-  		graphY.push(2)
-  	when "D-"
-  		graphY.push(1)
-  	when "F"
-  		graphY.push(0)
-  	else
+	while grades.length > 0 do
+		case grades.pop
+		when "A"
+			graphY.push(11)
+		when "A-"
+			graphY.push(10)
+		when "B+"
+			graphY.push(9)
+		when "B"
+			graphY.push(8)
+		when "B-"
+			graphY.push(7)
+		when "C+"
+			graphY.push(6)
+		when "C"
+			graphY.push(5)
+		when "C-"
+			graphY.push(4)
+		when "D+"
+			graphY.push(3)
+		when "D"
+			graphY.push(2)
+		when "D-"
+			graphY.push(1)
+		when "F"
+			graphY.push(0)
+		else
   		graphY.push(-1) # Sopranos Season 5 has no reviews. This allows the contour to skip over season 5, but still present the gap.
   	end
   end
 
   	# writes a text file containing the numbers corresponding to each grade
-    begin
-	  file = File.open("numberList.txt", "w")
-	  for i in 0..graphY.length-1
-	  	file.write(graphY[i].to_s + "\n")
-	  end 
-	rescue IOError => e
+  	begin
+  		file = File.open("numberList.txt", "w")
+  		for i in 0..graphY.length-1
+  			file.write(graphY[graphY.length-1 - i].to_s + "\n")
+  		end 
+  	rescue IOError => e
 	  #some error occur, dir not writable etc.
 	ensure
-	  file.close unless file == nil
+		file.close unless file == nil
 	end
 
 	puts ""
@@ -163,7 +168,7 @@ for i in 0..episodesPerSeason.length-1
 	end
 end
 
- for i in 0..12
+for i in 0..12
 	for j in 0..(graphY.length-1 + 2)
 
 		if i == 12 && j > 1

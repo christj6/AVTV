@@ -47,7 +47,7 @@ require 'rubygems'
 require 'nokogiri' 
 require 'open-uri'
 require 'mechanize'
-
+require_relative 'test.rb'
 
 agent = Mechanize.new
 
@@ -106,7 +106,6 @@ agent.get('http://www.avclub.com/tv/') do |page|
   	else
   		season = reviews.search('.grade.letter.tv').reverse
   	end
-
   	topJunk = season[season.size - 1] # grabs top element from array
 
   	while season[season.size - 1] == topJunk
@@ -166,7 +165,8 @@ agent.get('http://www.avclub.com/tv/') do |page|
   		graphY.push(-1) # Sopranos Season 5 has no reviews. This allows the contour to skip over season 5, but still present the gap.
   	end
   end
-
+  #calls a function that outputs an html file for displaying the chart of the show
+  writeContents(graphY, episodesPerSeason, validSeasons, _show)
   	# writes a text file containing the numbers corresponding to each grade
   	begin
   		file = File.open("numberList.txt", "w")

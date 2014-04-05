@@ -1,6 +1,6 @@
 
 # not needed to run the av club file; this is just a side thing
-
+require_relative 'test.rb'
 require 'rubygems'
 require 'nokogiri' 
 require 'open-uri'

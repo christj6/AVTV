@@ -95,7 +95,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   		choice = results[i].inner_html
 
   		current = jarow.getDistance(_show.downcase,choice.downcase)
-  		print choice.downcase + ": \t" + current.to_s + "% match"
+  		print choice + ": \t" + (current*100).to_s + "% match"
   		puts ""
 
   		if current > bestDistance

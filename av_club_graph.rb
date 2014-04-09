@@ -86,20 +86,20 @@ agent.get('http://www.avclub.com/tv/') do |page|
   	# _show = results[userChoice.to_i-1].inner_html
 
   	# choice 2: compare the string and make a guess on which one is most likely the one the user intended.
-  	jarow = FuzzyStringMatch::JaroWinkler.create( :native )
+  	jarow = FuzzyStringMatch::JaroWinkler.create( :pure )
   	bestDistance = 0
   	current = 0
   	matchIndex = 0
 
   	for i in 0..results.length-1
   		choice = results[i].inner_html
-  		puts choice # to be removed
 
-  		current = jarow.getDistance(_show,choice)
-  		puts current
+  		current = jarow.getDistance(_show.downcase,choice.downcase)
+  		print choice.downcase + ": \t" + current.to_s + "% match"
+  		puts ""
 
   		if current > bestDistance
-  			current = bestDistance
+  			bestDistance = current
   			matchIndex = i
   		else
   			# do nothing
@@ -115,7 +115,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   end
 
   _show = _show.downcase.tr(" ", "_")
-  puts _show # --now "_show" is equal to the actual name of the show, not just whatever the user typed in.
+  #puts _show # --now "_show" is equal to the actual name of the show, not just whatever the user typed in.
 
   puts "" # make it easier on the eyes
 

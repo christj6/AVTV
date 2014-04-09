@@ -81,9 +81,14 @@ agent.get('http://www.avclub.com/tv/') do |page|
   	userChoice = gets.chomp
   	#userChoice = userChoice.gsub! '&amp;','&'
   	reviews = search_result.link_with(text: results[userChoice.to_i-1].inner_html).click
+  	_show = results[userChoice.to_i-1].inner_html
   else
   	reviews = search_result.link_with(text: results[0].inner_html).click
+  	_show = results[0].inner_html
   end
+
+  _show = _show.downcase.tr(" ", "_")
+  puts _show # --now "_show" is equal to the actual name of the show, not just whatever the user typed in.
 
   puts "" # make it easier on the eyes
 

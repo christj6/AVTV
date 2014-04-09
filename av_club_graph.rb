@@ -77,11 +77,38 @@ agent.get('http://www.avclub.com/tv/') do |page|
   puts "" # make it easier on the eyes
 
   if results.length > 1
+  	# choice 1: allow the user to input their choice. Might get complicated later when
+  	# we have to create some whole other page for storing the possible options. If we're going with rails.
   	puts "Which one is it? Enter the corresponding number."
   	userChoice = gets.chomp
-  	#userChoice = userChoice.gsub! '&amp;','&'
   	reviews = search_result.link_with(text: results[userChoice.to_i-1].inner_html).click
   	_show = results[userChoice.to_i-1].inner_html
+
+  	# choice 2: compare the string and make a guess on which one is most likely the one the user intended.
+=begin
+
+	# this part compares each choice's string length to the user input's string length.
+	# if a user types in "the shield", 'the shield' and 'the shield (classic)' both appear,
+	# but 'the shield' has a string length closer to the user input, so it would get chosen.
+	# in theory, that is what would happen, but the approach has some kinks to work out.
+  	smallestDiff = 50
+  	diff = 0
+
+  	for i in 0..results.length-1
+  		diff = (results[i].inner_html).to_s.length - _show.length
+
+  		if diff.abs < smallestDiff.abs
+  			matchIndex = i
+  		else
+  			# do nothing
+  		end
+  	end
+
+  	reviews = search_result.link_with(text: results[matchIndex.to_i].inner_html).click
+  	_show = results[matchIndex.to_i].inner_html
+=end
+
+
   else
   	reviews = search_result.link_with(text: results[0].inner_html).click
   	_show = results[0].inner_html

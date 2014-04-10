@@ -1,4 +1,3 @@
-
 =begin
 
 Given the name of a television show, this program gathers the grades AV Club gave to every episode it reviewed,
@@ -48,7 +47,7 @@ require 'nokogiri'
 require 'open-uri'
 require 'mechanize'
 require 'fuzzystringmatch'
-require_relative 'test.rb'
+require_relative 'chart.rb'
 
 agent = Mechanize.new
 

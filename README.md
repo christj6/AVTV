@@ -5,5 +5,7 @@ AV Club web scraper: it fetches a TV show's grades and plots a graph with them. 
 
 Inspired by this: http://graphtv.kevinformatics.com/tt0903747
 
+Right now we are working on incorporating the program with JavaScript and Charts.js to output the data in a web application. This directory contains a preview of what the output might look like: http://www.tcnj.edu/~christj6/new/shows/
+
 TO-DO:
   need to change the size of the canvas that is created when the html file is written. double the size for starters

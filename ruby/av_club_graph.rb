@@ -47,7 +47,7 @@ require 'rubygems'
 require 'nokogiri' 
 require 'open-uri'
 require 'mechanize'
-require_relative 'test.rb'
+require_relative 'chart.rb'
 
 agent = Mechanize.new
 

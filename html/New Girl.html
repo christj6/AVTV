@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+    <script src='Chart.js'></script>
+  </head>
+  <body>
+    <h1>New Girl</h1>
+    <h2>Seasons Over Time</h2>
+    <canvas data-type='Line' height='400' id='line' width='1200'></canvas>
+    <div id='makeChart'>
+      <script>
+        var ctx = document.getElementById("line").getContext("2d");  
+        var data = {  
+          labels : ["S1E1", "S1E2", "S1E3", "S1E4", "S1E5", "S1E6", "S1E7", "S1E8", "S1E9", "S1E10", "S1E11", "S1E12", "S1E13", "S1E14", "S1E15", "S1E16", "S1E17", "S1E18", "S1E19", "S1E20", "S1E21", "S1E22", "S1E23", "S1E24", "S2E1", "S2E2", "S2E3", "S2E4", "S2E5", "S2E6", "S2E7", "S2E8", "S2E9", "S2E10", "S2E11", "S2E12", "S2E13", "S2E14", "S2E15", "S2E16", "S2E17", "S2E18", "S2E19", "S2E20", "S2E21", "S2E22", "S2E23", "S2E24", "S3E1", "S3E2", "S3E3", "S3E4", "S3E5", "S3E6", "S3E7", "S3E8", "S3E9", "S3E10", "S3E11", "S3E12", "S3E13", "S3E14", "S3E15", "S3E16", "S3E17", "S3E18", "S3E19", "S3E20"],  
+          datasets : [  
+            {  
+              fillColor : "rgba(120,120,170,0.5)",  
+              strokeColor : "rgba(120,120,170,1)",  
+              pointColor : "rgba(120,120,170,1)",  
+              pointStrokeColor : "#fff",  
+              data : [8, 6, 9, 8, 5, 7, 7, 5, 7, 8, 10, 8, 9, 6, 10, 8, 7, 10, 7, 10, 8, 5, 9, 8, 8, 11, 7, 9, 7, 10, 8, 9, 6, 10, 8, 8, 7, 9, 10, 11, 8, 9, 8, 8, 7, 10, 11, 10, 9, 9, 7, 10, 6, 10, 8, 11, 8, 9, 9, 11, 10, 9, 10, 7, 8, 8, 9, 9]  
+            }  
+          ]  
+        }  
+        var options = {
+        	barValueSpacing : 15,
+        	scaleGridLineColor : "rgba(0,0,125,.05)",
+        	scaleLineWidth : 2,
+        }
+        var myNewChart = new Chart(ctx).Bar(data, options);
+      </script>
+    </div>
+  </body>
+</html>

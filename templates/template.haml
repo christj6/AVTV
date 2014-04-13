@@ -14,12 +14,17 @@
 				  labels : #{self.keys.to_s},  
 				  datasets : [  
 				    {  
-				      fillColor : "rgba(220,220,220,0.5)",  
-				      strokeColor : "rgba(220,220,220,1)",  
-				      pointColor : "rgba(220,220,220,1)",  
+				      fillColor : "rgba(120,120,170,0.5)",  
+				      strokeColor : "rgba(120,120,170,1)",  
+				      pointColor : "rgba(120,120,170,1)",  
 				      pointStrokeColor : "#fff",  
 				      data : #{self.values.to_s}  
 				    }  
 				  ]  
 				}  
-				var myNewChart = new Chart(ctx).Bar(data);
+				var options = {
+					barValueSpacing : 15,
+					scaleGridLineColor : "rgba(0,0,125,.05)",
+					scaleLineWidth : 2,
+				}
+				var myNewChart = new Chart(ctx).Bar(data, options);

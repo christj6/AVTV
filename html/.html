@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+    <script src='Chart.js'></script>
+  </head>
+  <body>
+    <h1></h1>
+    <h2>Seasons Over Time</h2>
+    <canvas data-type='Line' height='400' id='line' width='1200'></canvas>
+    <div id='makeChart'>
+      <script>
+        var ctx = document.getElementById("line").getContext("2d");  
+        var data = {  
+          labels : ["S2E1", "S2E2", "S2E3", "S2E4", "S2E5", "S2E6", "S2E7", "S2E8", "S2E9", "S2E10", "S2E11", "S2E12", "S3E1", "S3E2", "S3E3", "S3E4", "S3E5", "S3E6", "S3E7", "S3E8", "S3E9", "S3E10", "S3E11", "S3E12", "S4E1", "S4E2", "S4E3", "S4E4", "S4E5", "S4E6", "S4E7", "S4E8", "S4E9", "S4E10", "S4E11", "S4E12", "S5E1", "S5E2", "S5E3", "S5E4", "S5E5", "S5E6", "S5E7", "S5E8", "S5E9", "S5E10", "S5E11", "S5E12", "S6E1", "S6E2", "S6E3", "S6E4", "S6E5", "S6E6", "S6E7", "S6E8", "S6E9", "S6E10", "S6E11", "S6E12", "S7E1", "S7E2", "S7E3", "S7E4", "S7E5", "S7E6", "S7E7", "S7E8", "S7E9", "S7E10", "S7E11", "S7E12", "S8E1", "S8E2", "S8E3", "S8E4", "S8E5", "S8E6", "S8E7", "S8E8", "S8E9", "S8E10", "S8E11", "S8E12"],  
+          datasets : [  
+            {  
+              fillColor : "rgba(120,120,170,0.5)",  
+              strokeColor : "rgba(120,120,170,1)",  
+              pointColor : "rgba(120,120,170,1)",  
+              pointStrokeColor : "#fff",  
+              data : [9, 9, 10, 9, 10, 8, 9, 11, 9, 11, 9, 9, 8, 9, 8, 8, 9, 7, 9, 9, 8, 10, 11, 10, 6, 8, 7, 10, 8, 8, 5, 7, 9, 10, 9, 10, 10, 7, 8, 6, 7, 8, 9, 9, 5, 10, 6, 8, 7, 8, 8, 5, 5, 4, 6, 4, 3, 4, 2, 5, 10, 9, 10, 9, 10, 8, 7, 9, 7, 3, 4, 4, 7, 10, 8, 5, 5, 6, 6, 3, 2, 3, 2, 0]  
+            }  
+          ]  
+        }  
+        var options = {
+        	barValueSpacing : 15,
+        	scaleGridLineColor : "rgba(0,0,125,.05)",
+        	scaleLineWidth : 2,
+        }
+        var myNewChart = new Chart(ctx).Bar(data, options);
+      </script>
+    </div>
+  </body>
+</html>

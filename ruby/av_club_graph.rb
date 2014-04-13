@@ -47,11 +47,22 @@ require 'rubygems'
 require 'nokogiri' 
 require 'open-uri'
 require 'mechanize'
+require 'fuzzystringmatch'
 require_relative 'chart.rb'
 
 agent = Mechanize.new
 
+## check command line arguments
+#  accepts only a single argument: either "jarow" or "reg"
+#  this tells the program which string matching technique to use when selecting the show to chart
 
+if ARGV.count != 1 then 
+  puts "Command-line arguments invalid. 1 required."
+  exit
+else 
+  command = ARGV[0]
+end
+ARGV.clear
 
 # AV Club Grades: A, A-, B+, B, B-, C+, C, C-, D+, D, D-, F
 # on metacritic, they correspond with: 100, 91, 83, 80, 75, 70, 67, 60, 58, 50, 42, 40 (SKIP), 33, 25, 16, 0
@@ -91,13 +102,41 @@ agent.get('http://www.avclub.com/tv/') do |page|
     #  of the fuzzy search, but the regexp below selected "Family Guy" correctly. This is because the regular expression matched as many characters as it could from 
     #  the broken search term and got the right answer.
     
-    reviews = nil
     _showProper = _show.split.map(&:capitalize).join(' ')
-    found = false
-    results.each do |i|
-      if !i.inner_html[/#{_showProper}(\s\(experts\))?/].nil? and !found then
-        reviews = search_result.link_with(text: i.inner_html).click
-        found = true
+    if command.eql?("jarow") then
+      puts "jarow match"
+      # choice 2: compare the string and make a guess on which one is most likely the one the user intended.
+      jarow = FuzzyStringMatch::JaroWinkler.create( :pure )
+      bestDistance = 0
+      current = 0
+      matchIndex = 0
+
+      for i in 0..results.length-1
+        choice = results[i].inner_html
+
+        current = jarow.getDistance(_show.downcase,choice.downcase)
+        print choice + ": \t" + (current*100).to_s + "% match"
+        puts ""
+
+        if current > bestDistance
+          bestDistance = current
+          matchIndex = i
+        else
+          # do nothing
+        end
+      end
+
+      reviews = search_result.link_with(text: results[matchIndex.to_i].inner_html).click
+      #_show = results[matchIndex.to_i].inner_html
+    elsif command.eql?("reg") 
+      puts "regular expression match"
+      reviews = nil
+      found = false
+      results.each do |i|
+        if !i.inner_html[/#{_showProper}(\s\(experts\))?/].nil? and !found then
+          reviews = search_result.link_with(text: i.inner_html).click
+          found = true
+        end
       end
     end
   elsif results.length == 1
@@ -188,7 +227,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   	end
   end
   #calls a function that outputs an html file for displaying the chart of the show
-  writeContents(graphY, episodesPerSeason, validSeasons, _show)
+  writeContents(graphY, episodesPerSeason, validSeasons, _showProper)
   	# writes a text file containing the numbers corresponding to each grade
   	# begin
 #       file = File.open("numberList.txt", "w")

@@ -77,12 +77,34 @@ agent.get('http://www.avclub.com/tv/') do |page|
   puts "" # make it easier on the eyes
 
   if results.length > 1
-  	puts "Which one is it? Enter the corresponding number."
-  	userChoice = gets.chomp
+    #puts "Which one is it? Enter the corresponding number."
+  	#userChoice = gets.chomp
   	#userChoice = userChoice.gsub! '&amp;','&'
-  	reviews = search_result.link_with(text: results[userChoice.to_i-1].inner_html).click
-  else
+  	#reviews = search_result.link_with(text: results[userChoice.to_i-1].inner_html).click
+    
+    ## create _showProper which is just the search term with the first letter of each word capitalized to match av club's style.
+    #  a found boolean is used to determine when the search is successful. this is needed because the (experts) part of the reg exp is optional, so it will match
+    #  any search term that has (experts) or (newbies) or nothing. i am counting on the user always desiring the expert rating (if it exists) and for that rating to
+    #  always come first.
+    
+    ## i also noticed that, for example, if i searched for "family gu", the search function would indeed return Family Guy as a valid result, which i assume is because 
+    #  of the fuzzy search, but the regexp below selected "Family Guy" correctly. This is because the regular expression matched as many characters as it could from 
+    #  the broken search term and got the right answer.
+    
+    reviews = nil
+    _showProper = _show.split.map(&:capitalize).join(' ')
+    found = false
+    results.each do |i|
+      if !i.inner_html[/#{_showProper}(\s\(experts\))?/].nil? and !found then
+        reviews = search_result.link_with(text: i.inner_html).click
+        found = true
+      end
+    end
+  elsif results.length == 1
   	reviews = search_result.link_with(text: results[0].inner_html).click
+  else ## added additional error checking in case there are no search results
+    puts "No results matched your search term."
+    exit
   end
 
   puts "" # make it easier on the eyes
@@ -168,16 +190,16 @@ agent.get('http://www.avclub.com/tv/') do |page|
   #calls a function that outputs an html file for displaying the chart of the show
   writeContents(graphY, episodesPerSeason, validSeasons, _show)
   	# writes a text file containing the numbers corresponding to each grade
-  	begin
-  		file = File.open("numberList.txt", "w")
-  		for i in 0..graphY.length-1
-  			file.write(graphY[graphY.length-1 - i].to_s + "\n")
-  		end 
-  	rescue IOError => e
-	  #some error occur, dir not writable etc.
-	ensure
-		file.close unless file == nil
-	end
+  	# begin
+#       file = File.open("numberList.txt", "w")
+#       for i in 0..graphY.length-1
+#         file.write(graphY[graphY.length-1 - i].to_s + "\n")
+#       end 
+#     rescue IOError => e
+#     #some error occur, dir not writable etc.
+#   ensure
+#     file.close unless file == nil
+#   end
 
 	puts ""
   	puts "" # make it easier on the eyes

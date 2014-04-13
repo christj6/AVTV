@@ -57,8 +57,9 @@ agent = Mechanize.new
 #  this tells the program which string matching technique to use when selecting the show to chart
 
 if ARGV.count != 1 then 
-  puts "Command-line arguments invalid. 1 required."
-  exit
+  puts "No command line arguments specified. Assuming jarow."
+  command = "jarow"
+  #exit
 else 
   command = ARGV[0]
 end

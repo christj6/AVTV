@@ -77,6 +77,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   puts "" # make it easier on the eyes
 
   if results.length > 1
+<<<<<<< HEAD
   	# choice 1: allow the user to input their choice. Might get complicated later when
   	# we have to create some whole other page for storing the possible options. If we're going with rails.
   	# puts "Which one is it? Enter the corresponding number."
@@ -108,14 +109,22 @@ agent.get('http://www.avclub.com/tv/') do |page|
   	reviews = search_result.link_with(text: results[matchIndex.to_i].inner_html).click
   	_show = results[matchIndex.to_i].inner_html
 
+=======
+  	puts "Which one is it? Enter the corresponding number."
+  	userChoice = gets.chomp
+  	#userChoice = userChoice.gsub! '&amp;','&'
+  	reviews = search_result.link_with(text: results[userChoice.to_i-1].inner_html).click
+>>>>>>> parent of 7e005d3... messed with _show var
   else
   	reviews = search_result.link_with(text: results[0].inner_html).click
-  	_show = results[0].inner_html
   end
 
+<<<<<<< HEAD
   _show = _show.downcase.tr(" ", "_")
   #puts _show # --now "_show" is equal to the actual name of the show, not just whatever the user typed in.
 
+=======
+>>>>>>> parent of 7e005d3... messed with _show var
   puts "" # make it easier on the eyes
 
 

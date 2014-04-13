@@ -128,7 +128,10 @@ agent.get('http://www.avclub.com/tv/') do |page|
       end
 
       reviews = search_result.link_with(text: results[matchIndex.to_i].inner_html).click
-      #_show = results[matchIndex.to_i].inner_html
+      _show = results[matchIndex.to_i].inner_html
+      _showProper = _show.split.map(&:capitalize).join('_')
+      #puts _showProper
+
     elsif command.eql?("reg") 
       puts "regular expression match"
       reviews = nil
@@ -142,6 +145,10 @@ agent.get('http://www.avclub.com/tv/') do |page|
     end
   elsif results.length == 1
   	reviews = search_result.link_with(text: results[0].inner_html).click
+  	_show = results[0].inner_html
+    _showProper = _show.split.map(&:capitalize).join('_')
+    #puts _showProper
+
   else ## added additional error checking in case there are no search results
     puts "No results matched your search term."
     exit
@@ -230,7 +237,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   #calls a function that outputs an html file for displaying the chart of the show
   writeContents(graphY, episodesPerSeason, validSeasons, _showProper)
   	# writes a text file containing the numbers corresponding to each grade
-  	# begin
+#  	 begin
 #       file = File.open("numberList.txt", "w")
 #       for i in 0..graphY.length-1
 #         file.write(graphY[graphY.length-1 - i].to_s + "\n")

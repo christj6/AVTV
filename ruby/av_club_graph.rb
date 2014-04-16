@@ -56,6 +56,83 @@ agent = Mechanize.new
 #  accepts only a single argument: either "jarow" or "reg"
 #  this tells the program which string matching technique to use when selecting the show to chart
 
+def asciiGraph(graphY, episodesPerSeason)
+	tickMarks = Array.new # stores the sum of the previous seasons (used to drop tick marks at season divisions)
+	# for example, breaking bad has 5 seasons, each containing: 7, 13, 13, 13, and 16 episdoes, respectively.
+	# In this case, tickMarks would store numbers: 7, 20, 33, 46, 62 in indexes 0, 1, 2, 3, 4.
+
+	for i in 0..episodesPerSeason.length-1
+		for j in 0..i
+			#
+			tickMarks[i] = tickMarks[i].to_i + episodesPerSeason[j].to_i
+		end
+	end
+
+	for i in 0..12
+		for j in 0..(graphY.length-1 + 2)
+
+			if i == 12 && j > 1
+				print "--"
+			else
+				if j == 0
+					# fill the left edge of the graph with grades corresponding to each row.
+					case i
+					when 0
+						print "A "
+					when 1
+						print "A-"
+					when 2
+						print "B+"
+					when 3
+						print "B "
+					when 4
+						print "B-"
+					when 5
+						print "C+"
+					when 6
+						print "C "
+					when 7
+						print "C-"
+					when 8
+						print "D+"
+					when 9
+						print "D "
+					when 10
+						print "D-"
+					when 11
+						print "F "
+					else
+						print "  "
+					end
+				else
+					if j == 1
+						print "|" # drop a vertical line down to separate the grades from the start of the graph proper.
+					else
+						_yFlip = 11 - i; # flips the value, since the graph counts upside down
+
+						if graphY[graphY.length-1 - j + 2] == _yFlip then
+							print "O" # the episode's grade is right here
+						else
+							print "-" # blank space
+						end
+
+						# put down the vertical bars to separate seasons
+						if tickMarks.include? j-1
+							print "|"
+						else
+							print " " # no need to drop a bar here
+						end
+						# end vertical bar loop
+					end
+				end
+			end
+			
+			STDOUT.flush
+		end
+		puts "" # I forget why, but taking this line out makes the graph look horrible.
+	end
+end
+
 if ARGV.count != 1 then 
   puts "No command line arguments specified. Assuming jarow."
   command = "jarow"
@@ -253,81 +330,7 @@ agent.get('http://www.avclub.com/tv/') do |page|
   	puts "" # make it easier on the eyes
   	puts ""
 
-tickMarks = Array.new # stores the sum of the previous seasons (used to drop tick marks at season divisions)
-# for example, breaking bad has 5 seasons, each containing: 7, 13, 13, 13, and 16 episdoes, respectively.
-# In this case, tickMarks would store numbers: 7, 20, 33, 46, 62 in indexes 0, 1, 2, 3, 4.
-
-for i in 0..episodesPerSeason.length-1
-	for j in 0..i
-		#
-		tickMarks[i] = tickMarks[i].to_i + episodesPerSeason[j].to_i
-	end
-end
-
-for i in 0..12
-	for j in 0..(graphY.length-1 + 2)
-
-		if i == 12 && j > 1
-			print "--"
-		else
-			if j == 0
-				# fill the left edge of the graph with grades corresponding to each row.
-				case i
-				when 0
-					print "A "
-				when 1
-					print "A-"
-				when 2
-					print "B+"
-				when 3
-					print "B "
-				when 4
-					print "B-"
-				when 5
-					print "C+"
-				when 6
-					print "C "
-				when 7
-					print "C-"
-				when 8
-					print "D+"
-				when 9
-					print "D "
-				when 10
-					print "D-"
-				when 11
-					print "F "
-				else
-					print "  "
-				end
-			else
-				if j == 1
-					print "|" # drop a vertical line down to separate the grades from the start of the graph proper.
-				else
-					_yFlip = 11 - i; # flips the value, since the graph counts upside down
-
-					if graphY[graphY.length-1 - j + 2] == _yFlip then
-						print "O" # the episode's grade is right here
-					else
-						print "-" # blank space
-					end
-
-					# put down the vertical bars to separate seasons
-					if tickMarks.include? j-1
-						print "|"
-					else
-						print " " # no need to drop a bar here
-					end
-					# end vertical bar loop
-				end
-			end
-		end
-		
-		STDOUT.flush
-	end
-	puts ""
-	#puts ""
-end
+  	asciiGraph(graphY, episodesPerSeason)
 
 
 end
